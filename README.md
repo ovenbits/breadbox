@@ -23,10 +23,10 @@ Or install it yourself as:
 
 ## Usage
 
-1. Get a [Dropbox Access Token](https://www.dropbox.com/developers/blog/94/generate-an-access-token-for-your-own-account)
-2. Add to your initializers:
+### 1. Get a [Dropbox Access Token](https://www.dropbox.com/developers/blog/94/generate-an-access-token-for-your-own-account)
+### 2. Add to your initializers:
 
-```
+```ruby
 # config/initializers/breadbox.rb
 
 Breadbox.configure do |config|
@@ -34,14 +34,14 @@ Breadbox.configure do |config|
 end
 ```
 
-3. Configure your root directory for uploading files (Optional)
+### 3. Configure your root directory for uploading files (Optional)
 
-By default - the root path will be the root directory of your DropBox folder.
-You can, however, change the root path to be anything you want.
+> By default - the root path will be the root directory of your DropBox folder.
+You can, however, change the root path to be anything you want (inside of Dropbox).
 
 **Note: You have to prefix the folder you wnt with a `/`, ex: `/uploads/my-files`**
 
-```
+```ruby
 # config/initializers/breadbox.rb
 
 Breadbox.configure do |config|
@@ -50,9 +50,9 @@ Breadbox.configure do |config|
 end
 ```
 
-4. Use it! :)
+### 4. Use it! :)
 
-Parameters:
+#### Parameters:
 
 - `path`: defaults to `nil`, but this is where you put a custom folder if you so wish (in relation
   to your `root_path`, which if you didn't configure in your initializer, will be your root Dropbox
@@ -61,7 +61,7 @@ Parameters:
 - `cleanup`: defaults to `false`, but if you pass `true` - it will remove the local file after uploading
   to DropBox
 
-```
+```ruby
 # to upload a file to Dropbox/uploads/my-cool-file.jpg
 # and remove it after upload
 
