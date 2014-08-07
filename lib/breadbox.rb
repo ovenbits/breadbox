@@ -12,6 +12,12 @@ module Breadbox
     attr_writer :configuration
   end
 
+  def self.cleanup(file: nil, cleanup: true)
+    if cleanup && File.exists?(file)
+      File.delete(file)
+    end
+  end
+
   def self.client
     @client ||= Client.new(
       root_path: configuration.root_path,
@@ -32,7 +38,9 @@ module Breadbox
     @configuration = Configuration.new
   end
 
-  def self.upload(options)
-    client.upload(options)
+  def self.upload(path: nil, file: nil, cleanup: false)
+    if client.upload(path: path, file: file)
+      cleanup(file: file, cleanup: cleanup)
+    end
   end
 end
