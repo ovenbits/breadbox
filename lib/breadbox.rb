@@ -1,5 +1,6 @@
 require "breadbox/version"
 require "breadbox/configuration"
+require "breadbox/client"
 
 begin
   require "pry"
@@ -11,6 +12,10 @@ module Breadbox
     attr_writer :configuration
   end
 
+  def self.client
+    @client ||= Client.new(token: configuration.dropbox_access_token).client
+  end
+
   def self.configuration
     @configuration ||= Configuration.new
   end
@@ -20,6 +25,7 @@ module Breadbox
   end
 
   def self.reset
+    @client        = nil
     @configuration = Configuration.new
   end
 end
