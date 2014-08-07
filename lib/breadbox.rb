@@ -13,7 +13,10 @@ module Breadbox
   end
 
   def self.client
-    @client ||= Client.new(token: configuration.dropbox_access_token).client
+    @client ||= Client.new(
+      root_path: configuration.root_path,
+      token: configuration.dropbox_access_token,
+    )
   end
 
   def self.configuration
@@ -27,5 +30,9 @@ module Breadbox
   def self.reset
     @client        = nil
     @configuration = Configuration.new
+  end
+
+  def self.upload(options)
+    client.upload(options)
   end
 end

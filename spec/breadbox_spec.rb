@@ -5,7 +5,7 @@ describe Breadbox do
     before do
       Breadbox.configure do |config|
         config.dropbox_access_token = "12345"
-        config.root_directory       = "/my-new-root"
+        config.root_path            = "/my-new-root"
       end
     end
 
@@ -16,7 +16,7 @@ describe Breadbox do
     end
 
     it "returns the newly assigned root" do
-      expect(Breadbox.configuration.root_directory).to eq "/my-new-root"
+      expect(Breadbox.configuration.root_path).to eq "/my-new-root"
     end
   end
 
@@ -29,9 +29,31 @@ describe Breadbox do
 
     after { Breadbox.reset }
 
-    it "assigns the token to a DropboxClient" do
+    it "assigns the token to a new Client" do
       client = Breadbox.client
-      expect(client).to be_kind_of DropboxClient
+      expect(client).to be_kind_of Breadbox::Client
+    end
+  end
+
+  describe "#upload" do
+    let!(:filepath) { "./tmp/my-new-file.jpg" }
+
+    before do
+      FileUtils.touch(filepath)
+    end
+
+    it "tells the client the #upload" do
+      file   = File.open(filepath)
+      client = instance_double(Breadbox::Client)
+      params = {
+        path: "/my-folder",
+        file: file,
+      }
+
+      allow(Breadbox::Client).to receive(:new).and_return(client)
+      expect(client).to receive(:upload).with(params)
+
+      Breadbox.upload(params)
     end
   end
 end
