@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["reg@nathanielwatts.com"]
   spec.summary       = "A simple wrapper interface for the DropBox SDK gem."
   spec.description   = "This gem is just to provide some niceties for interfacing with the DropBox SDK."
-  spec.homepage      = "https://github.com/thewatts/breadbox"
+  spec.homepage      = "https://github.com/ovenbits"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
