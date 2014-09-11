@@ -21,7 +21,7 @@ Or install it yourself as:
 
     $ gem install breadbox
 
----
+
 ## Setup for Dropbox
 
 ### 1. Get a [Dropbox Access Token](https://www.dropbox.com/developers/blog/94/generate-an-access-token-for-your-own-account)
@@ -36,7 +36,7 @@ Breadbox.configure do |config|
 end
 ```
 
---
+
 ## Setup for S3
 
 ### 1. Get your [AWS Credentials](http://infinitewp.com/knowledge-base/where-are-my-amazon-s3-credentials/)
@@ -79,8 +79,7 @@ end
   to your `root_path`, which if you didn't configure in your initializer, will be your root Dropbox
   folder `/`.
 - `file`: The file object that you are uploading, ex: `file = File.open('./path-to-local-file').
-- `cleanup`: defaults to `false`, but if you pass `true` - it will remove the local file after uploading
-  to DropBox
+- `cleanup`: defaults to `false`, but if you pass `true` - it will remove the local file after uploading.
 
 ```ruby
 # to upload a file to [Dropbox Folder or S3 Bucket]/uploads/my-cool-file.jpg
