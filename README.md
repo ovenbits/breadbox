@@ -21,7 +21,8 @@ Or install it yourself as:
 
     $ gem install breadbox
 
-## Usage
+---
+## Setup for Dropbox
 
 ### 1. Get a [Dropbox Access Token](https://www.dropbox.com/developers/blog/94/generate-an-access-token-for-your-own-account)
 ### 2. Add to your initializers:
@@ -31,6 +32,7 @@ Or install it yourself as:
 
 Breadbox.configure do |config|
   config.dropbox_access_token = xxxxxxx # THIS IS REQUIRED
+  config.provider = :dropbox            # THIS IS REQUIRED
 end
 ```
 

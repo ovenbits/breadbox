@@ -1,6 +1,7 @@
 require "breadbox/version"
 require "breadbox/configuration"
 require "breadbox/client"
+require "breadbox/client_builder"
 
 begin
   require "pry"
@@ -19,10 +20,7 @@ module Breadbox
   end
 
   def self.client
-    @client ||= Client.new(
-      root_path: configuration.root_path,
-      token: configuration.dropbox_access_token,
-    )
+    @client ||= ClientBuilder.build(configuration)
   end
 
   def self.configuration
@@ -41,6 +39,7 @@ module Breadbox
   def self.upload(path: nil, file: nil, cleanup: false)
     if client.upload(path: path, file: file)
       cleanup(file: file, cleanup: cleanup)
+      true
     end
   end
 end
