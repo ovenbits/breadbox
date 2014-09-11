@@ -34,7 +34,7 @@ module Breadbox
 
       context "configuration provider is not valid (nil, empty, etc)" do
         it "will raise a MissingBreadboxProvider error" do
-          expect{ builder.build }.to raise_error MissingBreadboxProvider
+          expect { builder.build }.to raise_error MissingBreadboxProvider
         end
       end
 
@@ -42,7 +42,7 @@ module Breadbox
         let(:configuration) { nil }
 
         it "will raise a MissingBreadboxProvider error" do
-          expect{ builder.build }.to raise_error MissingBreadboxProvider
+          expect { builder.build }.to raise_error MissingBreadboxProvider
         end
       end
     end
@@ -50,7 +50,8 @@ module Breadbox
     describe "::build" do
       it "delegates to an instance of itself, and calls #build" do
         builder = instance_double(ClientBuilder)
-        allow(ClientBuilder).to receive(:new).with(configuration).and_return(builder)
+        allow(ClientBuilder).to receive(:new).with(configuration)
+                                             .and_return(builder)
         expect(builder).to receive(:build)
 
         ClientBuilder.build(configuration)

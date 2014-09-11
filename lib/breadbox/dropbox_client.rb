@@ -3,7 +3,6 @@ require "breadbox/client"
 
 module Breadbox
   class DropboxClient < Client
-
     def access_token
       configuration.dropbox_access_token
     end

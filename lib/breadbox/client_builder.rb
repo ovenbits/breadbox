@@ -7,7 +7,7 @@ module Breadbox
     attr_reader :configuration
 
     def initialize(configuration = nil)
-      @configuration = configuration || null_configuration 
+      @configuration = configuration || null_configuration
     end
 
     def build

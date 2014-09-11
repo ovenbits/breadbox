@@ -1,10 +1,10 @@
 module Breadbox
   class Configuration
-    attr_accessor :s3_bucket, 
+    attr_accessor :s3_bucket,
                   :s3_access_key_id,
                   :s3_secret_access_key,
-                  :dropbox_access_token, 
-                  :provider, 
+                  :dropbox_access_token,
+                  :provider,
                   :root_path
 
     def initialize
@@ -30,7 +30,7 @@ module Breadbox
     end
 
     def valid_providers
-      [ :s3, :dropbox ]
+      [:s3, :dropbox]
     end
   end
 end

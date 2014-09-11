@@ -17,7 +17,7 @@ module Breadbox
       configuration.root_path
     end
 
-    def upload(options = {})
+    def upload(*)
       not_implemented
     end
 
@@ -25,7 +25,7 @@ module Breadbox
 
     def filepath_from_paths_and_file(root_path, path, file)
       filename = File.basename(file)
-      [root_path, path, filename].join("/").gsub(/\/{2,}/, '/')
+      [root_path, path, filename].join("/").gsub(/\/{2,}/, "/")
     end
 
     def new_client_from_configuration
@@ -34,7 +34,7 @@ module Breadbox
 
     def not_implemented
       raise NotImplementedError,
-        "has not been implemented on #{ self.class }"
+            "has not been implemented on #{ self.class }"
     end
 
     def post_initialize; end

@@ -3,7 +3,6 @@ require "breadbox/client"
 
 module Breadbox
   class S3Client < Client
-
     def bucket
       configuration.s3_bucket
     end
@@ -27,7 +26,7 @@ module Breadbox
 
     def setup_s3
       AWS.config(
-        access_key_id: configuration.s3_access_key_id, 
+        access_key_id: configuration.s3_access_key_id,
         secret_access_key: configuration.s3_secret_access_key
       )
     end
@@ -35,19 +34,19 @@ module Breadbox
     def validate_bucket
       if configuration.s3_bucket.to_s.empty?
         raise MissingS3Bucket,
-          "You need to provide an AWS::S3 Bucket"
+              "You need to provide an AWS::S3 Bucket"
       end
     end
 
     def validate_tokens
       if configuration.s3_access_key_id.to_s.empty?
         raise MissingS3AccessKeyId,
-          "You need to provide an AWS::S3 Access Key ID"
+              "You need to provide an AWS::S3 Access Key ID"
       end
 
       if configuration.s3_secret_access_key.to_s.empty?
         raise MissingS3SecretAccessKey,
-          "You need to provide an AWS::S3 Secret Access Key"
+              "You need to provide an AWS::S3 Secret Access Key"
       end
     end
   end
