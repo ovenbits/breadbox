@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Breadbox::VERSION
   spec.authors       = ["Nathaniel Watts"]
   spec.email         = ["reg@nathanielwatts.com"]
-  spec.summary       = "A simple wrapper interface for the DropBox SDK gem."
-  spec.description   = "This gem is just to provide some niceties for interfacing with the DropBox SDK."
-  spec.homepage      = "https://github.com/ovenbits"
+  spec.summary       = "An interface for uploading to Dropbox or Amazon S3."
+  spec.description   = "This gem is just to provide some niceties for uploading with the DropBox and Amazon SDKs."
+  spec.homepage      = "https://github.com/ovenbits/breadbox"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
