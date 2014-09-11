@@ -36,25 +36,44 @@ Breadbox.configure do |config|
 end
 ```
 
-### 3. Configure your root directory for uploading files (Optional)
+--
+## Setup for S3
 
-> By default - the root path will be the root directory of your DropBox folder.
-You can, however, change the root path to be anything you want (inside of Dropbox).
-
-**Note: You have to prefix the folder you wnt with a `/`, ex: `/uploads/my-files`**
+### 1. Get your [AWS Credentials](http://infinitewp.com/knowledge-base/where-are-my-amazon-s3-credentials/)
+### 2. [Create or find a bucket](http://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html)
+### 3. Add to your initializers
 
 ```ruby
 # config/initializers/breadbox.rb
 
 Breadbox.configure do |config|
-  config.dropbox_access_token = xxxxxxx # THIS IS REQUIRED
-  config.root_path = "/uploads/my-files"
+  config.s3_bucket = "name of the bucket" # THIS IS REQUIRED
+  config.s3_secret_access_key = xxxxxx    # THIS IS REQUIRED
+  config.s3_access_key_id = xxxxxxx       # THIS IS REQUIRED
+  config.provider = :s3                   # THIS IS REQUIRED
 end
 ```
 
-### 4. Use it! :)
+### (Optional) Configure your root directory for uploading files
 
-#### Parameters:
+> By default - the root path will be the root directory of your [DropBox folder or S3 Bucket].
+You can, however, change the root path to be anything you want.
+
+**Note: You have to prefix the folder you want with a `/`, ex: `/uploads/my-files`**
+
+```ruby
+# config/initializers/breadbox.rb
+
+Breadbox.configure do |config|
+  config.root_path = "/uploads/my-files"
+
+  # ... more configurations ...
+end
+```
+
+## Usage
+
+### Parameters:
 
 - `path`: defaults to `nil`, but this is where you put a custom folder if you so wish (in relation
   to your `root_path`, which if you didn't configure in your initializer, will be your root Dropbox
@@ -64,7 +83,7 @@ end
   to DropBox
 
 ```ruby
-# to upload a file to Dropbox/uploads/my-cool-file.jpg
+# to upload a file to [Dropbox Folder or S3 Bucket]/uploads/my-cool-file.jpg
 # and remove it after upload
 
 file = File.open("./tmp/my-cool-file.jpg")
