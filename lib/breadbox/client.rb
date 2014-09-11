@@ -1,18 +1,24 @@
-require "dropbox_sdk"
+require "breadbox/null_configuration"
 
 module Breadbox
   class Client
-    attr_reader :client, :root_path, :token
+    attr_reader :configuration
 
-    def initialize(options = {})
-      @token     = options[:token]
-      @root_path = options[:root_path]
-      @client    = new_client_from_token
+    def initialize(configuration = nil)
+      @configuration = configuration || NullConfiguration.new
+      post_initialize
     end
 
-    def upload(path: nil, file: nil)
-      filepath = filepath_from_paths_and_file(root_path, path, file)
-      client.put_file(filepath, file)
+    def client
+      @client ||= new_client_from_configuration
+    end
+
+    def root_path
+      configuration.root_path
+    end
+
+    def upload(options = {})
+      not_implemented
     end
 
     protected
@@ -22,14 +28,15 @@ module Breadbox
       [root_path, path, filename].join("/").gsub(/\/{2,}/, '/')
     end
 
-    def new_client_from_token
-      if token.nil? || token.empty?
-        raise MissingAccessToken, "You need a Dropbox Access Token."
-      else
-        DropboxClient.new(token)
-      end
+    def new_client_from_configuration
+      not_implemented
     end
+
+    def not_implemented
+      raise NotImplementedError,
+        "has not been implemented on #{ self.class }"
+    end
+
+    def post_initialize; end
   end
 end
-
-class MissingAccessToken < Exception; end

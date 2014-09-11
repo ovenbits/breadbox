@@ -1,4 +1,5 @@
 require "spec_helper"
+require "./lib/breadbox"
 
 describe Breadbox do
   describe "::configure" do
@@ -6,6 +7,7 @@ describe Breadbox do
       Breadbox.configure do |config|
         config.dropbox_access_token = "12345"
         config.root_path            = "/my-new-root"
+        config.provider             = :dropbox
       end
     end
 
@@ -24,6 +26,7 @@ describe Breadbox do
     before do
       Breadbox.configure do |config|
         config.dropbox_access_token = "12345"
+        config.provider             = :dropbox
       end
     end
 
