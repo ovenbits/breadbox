@@ -1,6 +1,6 @@
 # Breadbox
 
-A simple wrapper interface for the [DropBox SDK gem](https://github.com/dropbox/dropbox-sdk-ruby).
+A simple wrapper interface for uploading files to Dropbox or Amazon S3
 
 ## Disclaimer
 
