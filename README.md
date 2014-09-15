@@ -56,7 +56,7 @@ Breadbox.configure do |config|
 end
 ```
 
-### (Optional) Configure your root directory for uploading files
+## (Optional) Configure your root directory for uploading files
 
 > By default - the root path will be the root directory of your [DropBox folder or S3 Bucket].
 You can, however, change the root path to be anything you want.
