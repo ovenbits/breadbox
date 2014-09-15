@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/ovenbits/breadbox/badges/gpa.svg)](https://codeclimate.com/github/ovenbits/breadbox)
+
 # Breadbox
 
 A simple wrapper interface for uploading files to Dropbox or Amazon S3
