@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/ovenbits/breadbox/badges/gpa.svg)](https://codeclimate.com/github/ovenbits/breadbox)
+
 # Breadbox
 
 A simple wrapper interface for the [DropBox SDK gem](https://github.com/dropbox/dropbox-sdk-ruby).
