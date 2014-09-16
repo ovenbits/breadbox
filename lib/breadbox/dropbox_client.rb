@@ -7,9 +7,20 @@ module Breadbox
       configuration.dropbox_access_token
     end
 
-    def upload(path: nil, file: nil)
-      filepath = filepath_from_paths_and_file(root_path, path, file)
-      client.put_file(filepath, file)
+    def upload(options = {})
+      path      = options[:path]
+      file      = options[:file]
+      overwrite = options[:overwrite] || false
+      share     = options[:share]
+      filepath  = filepath_from_paths_and_file(root_path, path, file)
+      result    = client.put_file(filepath, file, overwrite)
+
+      if share && result
+        share_hash = client.shares(result["path"])
+        share_hash["url"]
+      elsif result
+        result["path"]
+      end
     end
 
     protected

@@ -77,9 +77,11 @@ module Breadbox
       let(:client) { S3Client.new(configuration) }
 
       it "writes a file to an S3 Bucket Object" do
-        file = File.open("./tmp/new-file.jpg")
-        expect_any_instance_of(AWS::S3::S3Object).to receive(:write).with(file)
-        client.upload(path: "/", file: file)
+        file    = File.open("./tmp/new-file.jpg")
+        options = { acl: :public_read }
+        expect_any_instance_of(AWS::S3::S3Object).to receive(:write)
+                                                     .with(file, options)
+        client.upload(path: "/", file: file, public: true)
       end
     end
   end

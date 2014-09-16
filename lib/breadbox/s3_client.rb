@@ -11,9 +11,16 @@ module Breadbox
       @bucket ||= AWS::S3.new.buckets[bucket]
     end
 
-    def upload(path: nil, file: nil)
+    def upload(options = {})
+      path     = options[:path]
+      file     = options[:file]
+      acl      = options[:public] ? :public_read : nil
       filepath = filepath_from_paths_and_file(root_path, path, file)[1..-1]
-      s3_bucket_object.objects[filepath].write(file)
+      result   = s3_bucket_object.objects[filepath].write(file, acl: acl)
+
+      if result
+        result.public_url.to_s
+      end
     end
 
     protected

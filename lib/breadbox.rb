@@ -13,7 +13,10 @@ module Breadbox
     attr_writer :configuration
   end
 
-  def self.cleanup(file: nil, cleanup: true)
+  def self.cleanup(options = {})
+    file    = options[:file]
+    cleanup = options[:cleanup]
+
     if cleanup && File.exists?(file)
       File.delete(file)
     end
@@ -36,10 +39,10 @@ module Breadbox
     @configuration = Configuration.new
   end
 
-  def self.upload(path: nil, file: nil, cleanup: false)
-    if client.upload(path: path, file: file)
-      cleanup(file: file, cleanup: cleanup)
-      true
+  def self.upload(options = {})
+    if result = client.upload(options)
+      cleanup(options)
+      result
     end
   end
 end
