@@ -58,7 +58,8 @@ module Breadbox
         client         = DropboxClient.new(configuration)
         dropbox_client = instance_double(::DropboxClient)
         allow(client).to receive(:client).and_return(dropbox_client)
-        expect(dropbox_client).to receive(:put_file).with("/new-file.jpg", file)
+        expect(dropbox_client).to receive(:put_file)
+                                  .with("/new-file.jpg", file, false)
 
         client.upload(path: "/", file: file)
       end
