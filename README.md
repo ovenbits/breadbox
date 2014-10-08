@@ -1,4 +1,5 @@
 [![Code Climate](https://codeclimate.com/github/ovenbits/breadbox/badges/gpa.svg)](https://codeclimate.com/github/ovenbits/breadbox)
+[![Dependency Status](https://gemnasium.com/ovenbits/breadbox.svg)](https://gemnasium.com/ovenbits/breadbox)
 
 # Breadbox
 
@@ -91,6 +92,11 @@ file = File.open("./tmp/my-cool-file.jpg")
 Breadbox.upload(path: "uploads", file: file, cleanup: true)
 ```
 
+## Running Tests
+Just run `rake` in the project root.
+
+## Console
+For a REPL console, run `rake console` in the project root.
 
 ## Contributing
 
