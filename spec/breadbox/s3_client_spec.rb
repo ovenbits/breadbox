@@ -78,10 +78,18 @@ module Breadbox
 
       it "writes a file to an S3 Bucket Object" do
         file    = File.open("./tmp/new-file.jpg")
-        options = { acl: :public_read }
+        options = { acl: :public_read, content_type: nil }
         expect_any_instance_of(AWS::S3::S3Object).to receive(:write)
                                                      .with(file, options)
         client.upload(path: "/", file: file, public: true)
+      end
+
+      it "passes content-type parameter" do
+        file    = File.open("./tmp/new-file.jpg")
+        options = { content_type: "image/jpeg", acl: nil }
+        expect_any_instance_of(AWS::S3::S3Object).to receive(:write)
+                                                     .with(file, options)
+        client.upload(path: "/", file: file, content_type: "image/jpeg")
       end
     end
   end

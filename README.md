@@ -83,6 +83,8 @@ end
   folder `/`.
 - `file`: The file object that you are uploading, ex: `file = File.open('./path-to-local-file').
 - `cleanup`: defaults to `false`, but if you pass `true` - it will remove the local file after uploading.
+- `public`: defaults to `false`. Pass `true` if you'd like to set the file permission level to world readable.
+- `content_type`: S3 knows how to handle most file types, but occasionally, you may need to specify your own
 
 ```ruby
 # to upload a file to [Dropbox Folder or S3 Bucket]/uploads/my-cool-file.jpg

@@ -12,11 +12,12 @@ module Breadbox
     end
 
     def upload(options = {})
-      path     = options[:path]
-      file     = options[:file]
-      acl      = options[:public] ? :public_read : nil
+      path         = options[:path]
+      file         = options[:file]
+      acl          = options[:public] ? :public_read : nil
+      content_type = options[:content_type]
       filepath = filepath_from_paths_and_file(root_path, path, file)[1..-1]
-      result   = s3_bucket_object.objects[filepath].write(file, acl: acl)
+      result   = s3_bucket_object.objects[filepath].write(file, acl: acl, content_type: content_type)
 
       if result
         result.public_url.to_s
