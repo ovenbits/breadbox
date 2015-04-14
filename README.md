@@ -82,6 +82,7 @@ end
 - `path`: defaults to `nil`, but this is where you put a custom folder if you so wish (in relation
   to your `root_path`, which if you didn't configure in your initializer, will be your root Dropbox
   folder `/`.
+- `filename`: defaults to the name of the file you are uploading, but you can specify a custom name here.
 - `file`: The file object that you are uploading, ex: `file = File.open('./path-to-local-file').
 - `cleanup`: defaults to `false`, but if you pass `true` - it will remove the local file after uploading.
 - `public`: defaults to `false`. Pass `true` if you'd like to set the file permission level to world readable.
