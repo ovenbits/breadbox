@@ -51,22 +51,32 @@ module Breadbox
       end
     end
 
-    describe "with valid configuration settings" do
-      it "assigns the AccessKeyId and SecretAccessKey to AWS::S3" do
-        options = {
-          access_key_id: configuration.s3_access_key_id,
-          secret_access_key: configuration.s3_secret_access_key,
-        }
-        expect(AWS).to receive(:config).with(options)
-        S3Client.new(configuration)
+    describe "#s3_bucket_object" do
+      it "returns a new bucket object from Aws::S3" do
+        client = S3Client.new(configuration)
+        bucket_object = client.s3_bucket_object
+        expect(bucket_object).to be_kind_of Aws::S3::Bucket
       end
     end
 
-    describe "#s3_bucket_object" do
-      it "returns a new bucket object from AWS::S3" do
+    describe "#s3_client_object" do
+      let(:credentials) { double(:credentials) }
+
+      before do
+        allow(Aws::Credentials).to receive(:new).with(
+          configuration.s3_access_key_id,
+          configuration.s3_secret_access_key,
+        ).and_return(credentials)
+      end
+
+      it "initializes with the correct data" do
+        expect(Aws::S3::Client).to receive(:new).with(
+          region: configuration.s3_region,
+          credentials: credentials
+        )
+
         client = S3Client.new(configuration)
-        bucket_object = client.s3_bucket_object
-        expect(bucket_object).to be_kind_of AWS::S3::Bucket
+        client.s3_client_object
       end
     end
 
@@ -78,18 +88,29 @@ module Breadbox
 
       it "writes a file to an S3 Bucket Object" do
         file    = File.open("./tmp/new-file.jpg")
-        options = { acl: :public_read, content_type: nil }
-        expect_any_instance_of(AWS::S3::S3Object).to receive(:write)
-                                                     .with(file, options)
+        options = { body: file, acl: :public_read, content_type: nil }
+        expect_any_instance_of(Aws::S3::Object)
+          .to receive(:put).with(options)
+
         client.upload(path: "/", file: file, public: true)
       end
 
       it "passes content-type parameter" do
         file    = File.open("./tmp/new-file.jpg")
-        options = { content_type: "image/jpeg", acl: nil }
-        expect_any_instance_of(AWS::S3::S3Object).to receive(:write)
-                                                     .with(file, options)
+        options = { body: file, acl: :private, content_type: "image/jpeg" }
+        expect_any_instance_of(Aws::S3::Object)
+          .to receive(:put).with(options)
+
         client.upload(path: "/", file: file, content_type: "image/jpeg")
+      end
+
+      it "defaults to private :acl" do
+        file    = File.open("./tmp/new-file.jpg")
+        options = { body: file, acl: :private, content_type: "image/jpeg" }
+        expect_any_instance_of(Aws::S3::Object)
+          .to receive(:put).with(options)
+
+        client.upload(path: "/", file: file, public: nil, content_type: "image/jpeg")
       end
     end
   end

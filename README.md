@@ -50,6 +50,7 @@ end
 # config/initializers/breadbox.rb
 
 Breadbox.configure do |config|
+  config.s3_region = xxxxxxxx             # OPTIONAL - defaults to "us-east-1"
   config.s3_bucket = "name of the bucket" # THIS IS REQUIRED
   config.s3_secret_access_key = xxxxxx    # THIS IS REQUIRED
   config.s3_access_key_id = xxxxxxx       # THIS IS REQUIRED

@@ -7,6 +7,8 @@ module Breadbox
                   :provider,
                   :root_path
 
+    attr_writer :s3_region
+
     def initialize
       @root_path = default_root_path
     end
@@ -19,7 +21,15 @@ module Breadbox
       end
     end
 
+    def s3_region
+      @s3_region || default_s3_region
+    end
+
     protected
+
+    def default_s3_region
+      "us-east-1"
+    end
 
     def default_root_path
       "/"
