@@ -1,4 +1,4 @@
-require "aws"
+require "aws-sdk"
 require "breadbox/client"
 
 module Breadbox
@@ -8,20 +8,32 @@ module Breadbox
     end
 
     def s3_bucket_object
-      @bucket ||= AWS::S3.new.buckets[bucket]
+      @bucket ||= Aws::S3::Resource.new(client: s3_client_object).bucket(bucket)
     end
 
     def upload(options = {})
-      path         = options[:path]
-      file         = options[:file]
-      acl          = options[:public] ? :public_read : nil
-      content_type = options[:content_type]
-      filepath = filepath_from_paths_and_file(root_path, path, file)[1..-1]
-      result   = s3_bucket_object.objects[filepath].write(file, acl: acl, content_type: content_type)
+      path          = options[:path]
+      file          = options[:file]
+      acl           = options[:public] ? :public_read : :private
+      content_type  = options[:content_type]
+      filepath      = filepath_from_paths_and_file(root_path, path, file)[1..-1]
+      s3_object     = s3_bucket_object.object(filepath)
 
-      if result
-        result.public_url.to_s
+      result = s3_object.put(body: file, acl: acl, content_type: content_type)
+
+      if result && result.successful?
+        s3_object.public_url.to_s
       end
+    end
+
+    def s3_client_object
+      @client ||= Aws::S3::Client.new(
+        region: configuration.s3_region,
+        credentials: Aws::Credentials.new(
+          configuration.s3_access_key_id,
+          configuration.s3_secret_access_key,
+        )
+      )
     end
 
     protected
@@ -29,14 +41,6 @@ module Breadbox
     def post_initialize
       validate_bucket
       validate_tokens
-      setup_s3
-    end
-
-    def setup_s3
-      AWS.config(
-        access_key_id: configuration.s3_access_key_id,
-        secret_access_key: configuration.s3_secret_access_key
-      )
     end
 
     def validate_bucket
