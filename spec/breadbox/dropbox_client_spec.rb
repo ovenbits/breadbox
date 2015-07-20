@@ -63,6 +63,17 @@ module Breadbox
 
         client.upload(path: "/", file: file)
       end
+
+      it "allows for a filename to be passed as an option" do
+        file           = File.open("./tmp/new-file.jpg")
+        client         = DropboxClient.new(configuration)
+        dropbox_client = instance_double(::DropboxClient)
+        allow(client).to receive(:client).and_return(dropbox_client)
+        expect(dropbox_client).to receive(:put_file)
+                                  .with("/my-cool-file.jpg", file, false)
+
+        client.upload(path: "/", file: file, filename: "my-cool-file.jpg")
+      end
     end
   end
 end

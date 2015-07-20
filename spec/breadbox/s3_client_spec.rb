@@ -112,6 +112,33 @@ module Breadbox
 
         client.upload(path: "/", file: file, public: nil, content_type: "image/jpeg")
       end
+
+      it "passes path parameter" do
+        file    = File.open("./tmp/new-file.jpg")
+        bucket_object = client.s3_bucket_object.object("new-file.jpg")
+
+        expect_any_instance_of(Aws::S3::Bucket).to receive(:object)
+          .with("my-path/new-file.jpg").and_return(bucket_object)
+        expect(bucket_object).to receive(:put)
+
+        client.upload(path: "my-path", file: file, content_type: "image/jpeg")
+      end
+
+      it "passes filename parameter" do
+        file    = File.open("./tmp/new-file.jpg")
+        bucket_object = client.s3_bucket_object.object("my-cool-filename.jpg")
+
+        expect_any_instance_of(Aws::S3::Bucket).to receive(:object)
+          .with("my-cool-filename.jpg").and_return(bucket_object)
+        expect(bucket_object).to receive(:put)
+
+        client.upload(
+          path: "/",
+          file: file,
+          filename: "my-cool-filename.jpg",
+          content_type: "image/jpeg"
+        )
+      end
     end
   end
 end

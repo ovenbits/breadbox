@@ -10,9 +10,11 @@ module Breadbox
     def upload(options = {})
       path      = options[:path]
       file      = options[:file]
+      filename  = options[:filename]  || File.basename(file)
       overwrite = options[:overwrite] || false
       share     = options[:share]
-      filepath  = filepath_from_paths_and_file(root_path, path, file)
+
+      filepath  = filepath_from_paths_and_filename(root_path, path, filename)
       result    = client.put_file(filepath, file, overwrite)
 
       if share && result

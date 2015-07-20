@@ -23,8 +23,7 @@ module Breadbox
 
     protected
 
-    def filepath_from_paths_and_file(root_path, path, file)
-      filename = File.basename(file)
+    def filepath_from_paths_and_filename(root_path, path, filename)
       [root_path, path, filename].join("/").gsub(/\/{2,}/, "/")
     end
 

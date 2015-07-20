@@ -14,9 +14,10 @@ module Breadbox
     def upload(options = {})
       path          = options[:path]
       file          = options[:file]
+      filename      = options[:filename] || File.basename(file)
       acl           = options[:public] ? :public_read : :private
       content_type  = options[:content_type]
-      filepath      = filepath_from_paths_and_file(root_path, path, file)[1..-1]
+      filepath      = filepath_from_paths_and_filename(root_path, path, filename)[1..-1]
       s3_object     = s3_bucket_object.object(filepath)
 
       result = s3_object.put(body: file, acl: acl, content_type: content_type)
